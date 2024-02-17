@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GitHub Top Repos'),
+        title:  Text('GitHub Top Repos',style:GoogleFonts.poppins(fontSize: 15,fontWeight: FontWeight.bold),)
       ),
       body: ListView.builder(
         itemCount: repos.length + 1,
@@ -56,57 +57,63 @@ class _HomePageState extends State<HomePage> {
                       ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
                           onPressed: fetchGitHubRepos,
-                          child: Text('Load More'),
+                          child:const Text('Load More'),
                         );
                 }
           final repo = repos[index];
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4),
-            ),
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Image.network(
-                        repo['owner']['avatar_url'],
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      ),
-                      Container(width: 20),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(height: 5),
-                             Text(
-                              repo['owner']['login'],style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              repo['name'],
-                            ),
-                            Container(height: 5),
-                            Text(
-                                 repo['description'] ?? 'No description' ,
-                            ),
-                            Container(height: 10),
-                            Text(
-                              '${repo['stargazers_count']} stars',
-                              maxLines: 2,
-                            ),
-                          ],
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(shadowColor: Colors.white,
+              
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ClipRRect(borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            repo['owner']['avatar_url'],
+                            height: 100,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                    ],
+                        Container(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(height: 5),
+                               Text(
+                                repo['owner']['login'],style:GoogleFonts.poppins(fontSize: 15,fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                repo['name'],style:GoogleFonts.poppins(fontSize: 13),
+                              ),
+                              Container(height: 5),
+                              Text(
+                                   repo['description'] ?? 'No description' ,style:GoogleFonts.poppins(fontSize: 12),
+                              ),
+                              Container(height: 10),
+                              Text(
+                                '${repo['stargazers_count']} stars',style:GoogleFonts.poppins(fontSize: 15,),
+                              
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
